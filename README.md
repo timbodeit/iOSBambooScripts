@@ -5,9 +5,10 @@
 The build.sh script will build your project and generate a .ipa file.
 
 The build number is automatically set using the following scheme:
+
 - on master branch: same as bamboo plan build number
-- on develop: d\_<7digitCommitHash>
-- on feature branches: f<JIRA-Ticket-Number>\_<7digitCommitHash>
+- on develop: `d_<7digitCommitHash>`
+- on feature branches: `f<JIRA-Ticket-Number>_<7digitCommitHash>`
 - on relese/hotfix/bugfix branches: Similar to feature branch
 
 Make sure you always relase to the App Store from master, as this is the only
