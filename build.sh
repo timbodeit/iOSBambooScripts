@@ -1,11 +1,20 @@
 #!/bin/bash
+
 ./setBuildNumber.rb
 
+# Clean artifacts folder
 rm -rf ./artifacts
 mkdir ./artifacts
 
-xcodebuild clean archive -scheme ${bamboo_scheme_name} -archivePath ./artifacts/${bamboo_scheme_name}.xcarchive
-xcodebuild -exportArchive -exportFormat ipa -archivePath "./artifacts/${bamboo_scheme_name}.xcarchive" -exportPath "./artifacts/${bamboo_scheme_name}.ipa" -exportWithOriginalSigningIdentity
+# Generate ipa and dsyms
+configuration=${bamboo_configuration_name-Release}
+set -o pipefail
+ipa build --scheme ${bamboo_scheme_name}    \
+          --clean                           \
+          --archive                         \
+          --destination ./artifacts         \
+          --ipa "${bamboo_scheme_name}.ipa" \
+          --configuration $configuration    \
+          --verbose                         \
+    | xcpretty
 
-zip -r $bamboo_scheme_name".xcarchive.zip" $bamboo_scheme_name".xcarchive"
-zip -r $bamboo_scheme_name".app.dSYM.zip"  $bamboo_scheme_name".xcarchive/dSYMs/"$bamboo_scheme_name".app.dSYM"

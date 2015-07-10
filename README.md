@@ -1,5 +1,15 @@
 #Build Scripts for building iOS Projects with Bamboo
 
+##Dependencies
+Under the hood, these scripts use
+[shenzhen](https://github.com/nomad/shenzhen)
+and
+[xcpretty](https://github.com/supermarin/xcpretty)
+
+Install them through:
+
+    gem install shenzhen xcpretty
+
 ##Building
 
 The build.sh script will build your project and generate a .ipa file.
@@ -29,11 +39,8 @@ Then in the jobs artifacts section add these definitions:
 
 |Name|Location|Copy pattern|Shared|
 |----|--------|------------|------|
-|Archive|artifacts|\*.xcarchive.zip|Y|
 |dSYMs|artifacts|\*.dSYM.zip|Y|
 |IPA|artifacts|\*.ipa|Y|
-
-Archive 
 
 ####Configuration:
 
@@ -43,8 +50,8 @@ You will need to set the following variables in your plan configuration:
 - `info_plist_path` The path to the Info.plist file for your scheme. Used for
   automatically setting the build number
 
+
 Optional:
 
-- `worspace path` (coming soon)
-- `keychain_name` (coming soon)
-- `keychain_password` (coming soon)
+- `configuration_name` The name of the configuration you want to build.  
+  *Defaults to Release*
